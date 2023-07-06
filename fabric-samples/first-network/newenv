@@ -1,0 +1,36 @@
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/qtl.infotelconnect.com/users/Admin@qtl.infotelconnect.com/msp
+CORE_PEER_ADDRESS=peer0.qtl.infotelconnect.com:7051
+CORE_PEER_LOCALMSPID="qtlMSP"
+CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/qtl.infotelconnect.com/peers/peer0.qtl.infotelconnect.com/tls/ca.crt
+export CHANNEL_NAME=mychannel
+
+
+
+
+peer channel create -o orderer0.ucccpr.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ucccpr.com/orderers/orderer0.ucccpr.com/msp/tlscacerts/tlsca.ucccpr.com-cert.pem
+
+peer channel join -b mychannel.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/vmipl.com/users/Admin@vmipl.com/msp CORE_PEER_ADDRESS=peer0.vmipl.com:9051 CORE_PEER_LOCALMSPID="vmiplMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/vmipl.com/peers/peer0.vmipl.com/tls/ca.crt peer channel join -b mychannel.block
+
+peer channel update -o orderer0.ucccpr.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/QTLMSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ucccpr.com/orderers/orderer0.ucccpr.com/msp/tlscacerts/tlsca.ucccpr.com-cert.pem
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/vmipl.com/users/Admin@vmipl.com/msp CORE_PEER_ADDRESS=peer0.vmipl.com:9051 CORE_PEER_LOCALMSPID="vmiplMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/vmipl.com/peers/peer0.vmipl.com/tls/ca.crt peer channel update -o orderer0.ucccpr.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/VMIPLMSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ucccpr.com/orderers/orderer0.ucccpr.com/msp/tlscacerts/tlsca.ucccpr.com-cert.pem
+
+
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/vmipl.com/users/Admin@vmipl.com/msp 
+CORE_PEER_ADDRESS=peer0.vmipl.com:9051 
+CORE_PEER_LOCALMSPID="vmiplMSP" 
+CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/vmipl.com/peers/peer0.vmipl.com/tls/ca.crt 
+export CHANNEL_NAME=mychannel
+
+
+peer channel create -o orderer4.ucccpr.com:8050 -c $CHANNEL_NAME -f ./channel-artifacts/channel.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ucccpr.com/orderers/orderer4.ucccpr.com/msp/tlscacerts/tlsca.ucccpr.com-cert.pem
+
+peer channel join -b mychannel.block
+
+CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/qtl.infotelconnect.com/users/Admin@qtl.infotelconnect.com/msp CORE_PEER_ADDRESS=peer0.qtl.infotelconnect.com:9051 CORE_PEER_LOCALMSPID="qtlMSP" CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/qtl.infotelconnect.com/peers/peer0.qtl.infotelconnect.com/tls/ca.crt peer channel join -b mychannel.block
+
+
+peer channel update -o orderer4.ucccpr.com:8050 -c $CHANNEL_NAME -f ./channel-artifacts/QTLMSPanchors.tx --tls --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/ucccpr.com/orderers/orderer4.ucccpr.com/msp/tlscacerts/tlsca.ucccpr.com-cert.pem

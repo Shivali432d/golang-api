@@ -1,0 +1,4 @@
+npm init/yarn init
+touch index.js -- entry point
+npm i express
+node data.js

@@ -1,0 +1,65 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+
+  orderer4.ucccpr.com:
+    container_name: orderer4.ucccpr.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+        - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+        - ../crypto-config/ordererOrganizations/ucccpr.com/orderers/orderer4.ucccpr.com/msp:/var/hyperledger/orderer/msp
+        - ../crypto-config/ordererOrganizations/ucccpr.com/orderers/orderer4.ucccpr.com/tls/:/var/hyperledger/orderer/tls
+        - orderer4.ucccpr.com:/var/hyperledger/production/orderer
+    ports:
+      - 8050:8050
+
+  peer0.vmipl.com:
+    container_name: peer0.vmipl.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.vmipl.com
+      - CORE_PEER_ADDRESS=peer0.vmipl.com:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.vmipl.com:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.vmipl.com:9051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.vmipl.com:10051
+      - CORE_PEER_LOCALMSPID=vmiplMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/vmipl.com/peers/peer0.vmipl.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/vmipl.com/peers/peer0.vmipl.com/tls:/etc/hyperledger/fabric/tls
+        - peer0.vmipl.com:/var/hyperledger/production
+    ports:
+      - 9051:9051
+
+  peer1.vmipl.com:
+    container_name: peer1.vmipl.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.vmipl.com
+      - CORE_PEER_ADDRESS=peer1.vmipl.com:10051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.vmipl.com:10052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.vmipl.com:10051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.vmipl.com:9051
+      - CORE_PEER_LOCALMSPID=vmiplMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/vmipl.com/peers/peer1.vmipl.com/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/vmipl.com/peers/peer1.vmipl.com/tls:/etc/hyperledger/fabric/tls
+        - peer1.vmipl.com:/var/hyperledger/production
+    ports:
+      - 10051:10051
